@@ -3,9 +3,11 @@ import yaml
 import tkinter as tk
 from tkinter import filedialog
 import time
+import glob
 import sys
 from vid_hash import generate
 from vid_copy import filetrans
+from vid_verify import verify
 from test import test
 
 collection = {}
@@ -18,6 +20,7 @@ with open('WA2011.yml', 'r') as read:
 
 root = tk.Tk()
 root.withdraw()
+root.attributes('-topmost', True)
 
 for key, value in collection.items():
     print(':::::: Insert drive {} ::::::'.format(key))
@@ -55,8 +58,16 @@ for key, value in collection.items():
 
     for file in files:
         dpx = os.path.join(src, file)
+        print(f'--------{file}----------')
+        dpx_files = glob.glob(dpx + '/**/*.dpx', recursive=True)
+
+        if len(dpx_files) == 0:
+            print('SKIPPING {} - no dpx files found {}'.format(file, dpx))
+            continue
 #        test(f, dpx)
-        generate(file, dpx)
-        filetrans(file, dpx, dest)
+        else:
+            generate(file, dpx, dpx_files)
+            filetrans(file, dpx, dest)
+            verify(dest, file)
 
     files[:] = []
