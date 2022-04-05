@@ -25,14 +25,14 @@ root.attributes('-topmost', True)
 for key, value in collection.items():
     print(':::::: Insert drive {} ::::::'.format(key))
     print(':::::: Select SOURCE location ::::::')
-    time.sleep(2)
+    time.sleep(1)
 
     src = filedialog.askdirectory()
     src_dpx = [dir for dir in os.listdir(src)
                 if os.path.isdir(os.path.join(src, dir))]
 
     print(':::::: Please select copy DESTINATION ::::::')
-    time.sleep(2)
+    time.sleep(1)
 
     dest = filedialog.askdirectory()
 
@@ -40,9 +40,6 @@ for key, value in collection.items():
         if f in src_dpx:
             files.append(f)
             print('{} in source'.format(f))
-#            dpx = os.path.join(src, f)
-#            test(f, dpx)
-#            generate(f, dpx)
         else:
             missing.append(f)
 
@@ -58,16 +55,18 @@ for key, value in collection.items():
 
     for file in files:
         dpx = os.path.join(src, file)
-        print(f'--------{file}----------')
+        print('--------{}----------'.format(file))
         dpx_files = glob.glob(dpx + '/**/*.dpx', recursive=True)
+
+        register_file = '{}_dpx_hashes.md5'.format(file)
+        copied_register = os.path.join(dest, file, register_file)
 
         if len(dpx_files) == 0:
             print('SKIPPING {} - no dpx files found {}'.format(file, dpx))
             continue
-#        test(f, dpx)
         else:
-            generate(file, dpx, dpx_files)
+            generate(dpx, register_file, dpx_files)
             filetrans(file, dpx, dest)
-            verify(dest, file)
+            verify(dest, file, copied_register)
 
     files[:] = []

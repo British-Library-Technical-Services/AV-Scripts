@@ -1,12 +1,11 @@
 import os
 import hashlib
 
-def generate(file, dpx, dpx_files):
-    register = file + '_dpx_hashes.md5'
-    hash_register = os.path.join(dpx, register)
+def generate(dpx, register_file, dpx_files,):
+    hash_register = os.path.join(dpx, register_file)
 
     if os.path.isfile(hash_register):
-        print(f'Hash Register exists in {dpx}')
+        print('Hash Register exists in {}'.format(dpx))
     else:
         write = open((hash_register), 'w')
         write.close()
@@ -21,11 +20,13 @@ def generate(file, dpx, dpx_files):
                         md5.update(buffer)
 
                     fn = os.path.basename(x)
-                    hash = md5.hexdigest() + ' *' + fn
-                    print(hash)
+                    hash = md5.hexdigest()
+                    hash_write = '{} *{}'.format(hash, fn)
+                    print('GENERATED: {} hash for {}'.format(hash, fn))
+
                     with open((hash_register), 'r') as register:
                         if hash in register.read():
                             continue
                         else:
                             with open((hash_register), 'a') as register:
-                                register.write(hash + '\n')
+                                register.write(hash_write + '\n')
