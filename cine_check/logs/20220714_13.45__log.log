@@ -1,0 +1,24 @@
+2022-07-14 13:45:23,516:INFO:SOURCE: /Users/thomaslukeruane/Projects/video_validation/src_dpx/sata_1
+2022-07-14 13:45:23,516:INFO:DESTINATION: /Users/thomaslukeruane/Projects/video_validation/copy
+2022-07-14 13:45:23,548:INFO:MD5 hash for 00255.dpx EXISTS in SOURCE register
+2022-07-14 13:45:23,598:INFO:COPIED: 00255.dpx to /Users/thomaslukeruane/Projects/video_validation/copy/WA2011-005-1
+2022-07-14 13:45:23,624:INFO:VERIFIED: 6669fb231d742beec8e615fe1c224ddf hash for 00255.dpx
+2022-07-14 13:45:23,624:INFO:SUCCESS: 00255.dpx
+2022-07-14 13:45:23,658:INFO:MD5 hash for 00256.dpx EXISTS in SOURCE register
+2022-07-14 13:45:23,710:INFO:COPIED: 00256.dpx to /Users/thomaslukeruane/Projects/video_validation/copy/WA2011-005-1
+2022-07-14 13:45:23,737:INFO:VERIFIED: 6669fb231d742beec8e615fe1c224ddf hash for 00256.dpx
+2022-07-14 13:45:23,737:INFO:SUCCESS: 00256.dpx
+2022-07-14 13:45:23,771:INFO:MD5 hash for 00257.dpx EXISTS in SOURCE register
+2022-07-14 13:45:23,817:INFO:COPIED: 00257.dpx to /Users/thomaslukeruane/Projects/video_validation/copy/WA2011-005-1
+2022-07-14 13:45:23,845:INFO:VERIFIED: 6669fb231d742beec8e615fe1c224ddf hash for 00257.dpx
+2022-07-14 13:45:23,846:INFO:SUCCESS: 00257.dpx
+2022-07-14 13:45:23,881:INFO:MD5 hash for 00258.dpx EXISTS in SOURCE register
+2022-07-14 13:45:23,936:INFO:COPIED: 00258.dpx to /Users/thomaslukeruane/Projects/video_validation/copy/WA2011-005-1
+2022-07-14 13:45:23,963:INFO:VERIFIED: 6669fb231d742beec8e615fe1c224ddf hash for 00258.dpx
+2022-07-14 13:45:23,963:INFO:SUCCESS: 00258.dpx
+2022-07-14 13:45:23,999:INFO:MD5 hash for 00259.dpx EXISTS in SOURCE register
+2022-07-14 13:45:24,041:INFO:COPIED: 00259.dpx to /Users/thomaslukeruane/Projects/video_validation/copy/WA2011-005-1
+2022-07-14 13:45:24,069:INFO:VERIFIED: 6669fb231d742beec8e615fe1c224ddf hash for 00259.dpx
+2022-07-14 13:45:24,069:INFO:SUCCESS: 00259.dpx
+2022-07-14 13:45:24,070:WARNING:SKIPPING WA2011-005-2 no dpx files found
+2022-07-14 13:45:24,071:WARNING:SKIPPING WA2011-005-3 no dpx files found
