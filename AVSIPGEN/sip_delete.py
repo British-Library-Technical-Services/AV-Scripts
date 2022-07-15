@@ -33,7 +33,7 @@ with open(list, 'r') as del_list:
             sip_folder = '\\{}\{}'.format(hold, sip)
 
 # Checks the SIP has been deleted (page returns a 404 error) and removes
-# the SIP directory on SOS_HLF\_hold if stll present
+# the SIP directory on the hold folder if present
 
             check = requests.get(check_url, verify=False)
             if check.status_code == 404:
