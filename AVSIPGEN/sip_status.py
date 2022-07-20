@@ -10,9 +10,6 @@ import config
 # Mutes SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# API reference: GET api/SIP/{id}
-# https://avsip.ad.bl.uk/Help/Api/GET-api-SIP-id
-
 SIPStatus = 'sip_status.txt'
 url = config.url
 
