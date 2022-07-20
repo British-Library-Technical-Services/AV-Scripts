@@ -11,9 +11,6 @@ import config
 # Mutes SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# API reference: GET api/SIP/{id}
-# https://avsip.ad.bl.uk/Help/Api/GET-api-SIP-id
-
 url = config.url
 
 archived_id = 'archived_SIPs.txt'
