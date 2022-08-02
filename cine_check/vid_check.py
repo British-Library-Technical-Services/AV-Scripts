@@ -7,11 +7,13 @@ from tkinter import filedialog
 import time
 import glob
 import sys
+from alive_progress import alive_bar
 import shutil
 from modules.vid_hash import generate
 from modules.vid_copy import filetrans
 from modules.vid_verify import verify
 import globals
+
 
 logTS = datetime.now().strftime('%Y%m%d_%H.%M__log.log')
 logloc = os.getcwd()
@@ -23,10 +25,10 @@ formatter = logging.Formatter('%(asctime)s:%(module)s:%(levelname)s:%(message)s'
 file_handler = logging.FileHandler(log)
 
 file_handler.setFormatter(formatter)
-stream_handler = logging.StreamHandler()
+#stream_handler = logging.StreamHandler()
 
 logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
+#logger.addHandler(stream_handler)
 
 collection = {}
 files = []
@@ -68,6 +70,7 @@ for key, value in collection.items():
             missing.append(f)
 
     if not len(missing) == 0:
+        print('{} not in source'.format(missing))
         logger.warning('{} not in source'.format(missing))
         print('Would you like to continue?')
         print('Press q to quit or any other key to continue')
@@ -76,9 +79,10 @@ for key, value in collection.items():
             sys.exit(0)
 
     missing[:] = []
+    
 
     for file in files:
-        print('--------{}--------'.format(file))
+#        print('--------{}--------'.format(file))
 
         dpx = os.path.join(src, file)
         dpx_files = sorted(glob.glob(dpx + '/*.dpx', recursive=True))
@@ -130,38 +134,48 @@ for key, value in collection.items():
                 tries = tries -1
                 attempt = i +1
                 if attempt == 10:
+                    print('Attempts to contact {} exceeded'.format(dest))
                     logger.warning('Attempts to contact {} exceeded'.format(dest))
+                    print('EXIT')
                     logger.warning('EXIT')
                     sys.exit(0)
                 else:
-                    logger.warning('RETRYING {} {} is not accessible'.format(attempt, dest) )
+                    print('RETRYING {} {} is not accessible'.format(attempt, dest))
+                    logger.warning('RETRYING {} {} is not accessible'.format(attempt, dest))
                     continue
 
-        for x in dpx_files:
-            if os.path.isdir(x):
-                continue
-            else:
-                fn = os.path.basename(x)
-                copied_file = os.path.join(copy_to, fn)
-                generate(x, fn, src_register, dest_register)
-                filetrans(x, fn, copy_to)
-                verify(fn, copy_to, dest_register)
-#                test()
+        with alive_bar(len(dpx_files), title=f'{file}') as bar:
+            for x in dpx_files:
+                if os.path.isdir(x):
+                    continue
+                else:
+                    fn = os.path.basename(x)
+                    copied_file = os.path.join(copy_to, fn)
+                    generate(x, fn, src_register, dest_register)
+                    filetrans(x, fn, copy_to)
+                    verify(fn, copy_to, dest_register)
+    #                test()
 
-                try:
-                    if os.path.isfile(copied_file) and globals.hash_verified == True:
-                        shutil.move(x, safe_copy_loc)
-                        logger.info('SUCCESS: {}'.format(fn))
-                    elif os.path.isfile(copied_file) or globals.hash_verfied == False:
-                        if os.path.exists(fail_copy_loc):
-                            shutil.move(copied_file, fail_copy_loc)
-                            logger.warning('FAILED: {}'.format(fn))
-                        else:
-                            os.mkdir(fail_copy_loc)
-                            shutil.move(copied_file, fail_copy_loc)
-                            logger.warning('FAILED: {}'.format(fn))
+                    try:
+                        if os.path.isfile(copied_file) and globals.hash_verified == True:
+                            shutil.move(x, safe_copy_loc)
+                            print('SUCCESS: {}'.format(fn))
+                            logger.debug('SUCCESS: {}'.format(fn))
+                        elif os.path.isfile(copied_file) or globals.hash_verfied == False:
+                            if os.path.exists(fail_copy_loc):
+                                shutil.move(copied_file, fail_copy_loc)
+                                logger.warning('FAILED: {}'.format(fn))
+                            else:
+                                os.mkdir(fail_copy_loc)
+                                shutil.move(copied_file, fail_copy_loc)
+                                print('FAILED: {}'.format(fn))
+                                logger.warning('FAILED: {}'.format(fn))
 
-                except Exception as e:
-                   logger.warning(e)
+                    except Exception as e:
+                        print(e)
+                        logger.warning(e)
+                
+                time.sleep(0.01)
+                bar() 
 
     files[:] = []

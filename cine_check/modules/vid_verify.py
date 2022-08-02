@@ -46,8 +46,10 @@ def verify(fn, copy_to, dest_register):
             tries = tries -1
             attempt = i +1
             if attempt == 10:
+                print('EXIT')
                 logger.warning('EXIT')
                 sys.exit(0)
             else:
+                print('RETRYING {} - {} is not accessible'.format(attempt, copy_to))
                 logger.warning('RETRYING {} - {} is not accessible'.format(attempt, copy_to))
                 continue
