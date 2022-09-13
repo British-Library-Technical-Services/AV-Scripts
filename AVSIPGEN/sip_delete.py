@@ -2,7 +2,10 @@
 # WARNING: this will erase all reference to the SIP in the tool and database
 # and it will delete any files associated with the SIP.  Use with care - the
 # process is not reversable
-# Script requires config.py to run
+# The Script requires config.py to run
+
+# API reference: GET api/SIP/{id}
+# API reference: DELETE api/SIPs/SIP/{user_id}/{id}
 
 from requests.packages import urllib3
 import requests

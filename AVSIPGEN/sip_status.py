@@ -1,6 +1,8 @@
 # This script searches across a defined range of SIP IDs and reports the step they
 # have been completed upto.  The search excludes those submitted for ingest and Archvied SIPs
-# Script requires config.py to run
+# The Script requires config.py to run
+
+# API reference: API reference: GET api/SIP/{id}
 
 from requests.packages import urllib3
 import requests

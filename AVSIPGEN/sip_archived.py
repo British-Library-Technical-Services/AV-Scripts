@@ -1,7 +1,8 @@
 # This script searches across a defined range of SIP IDs and reports any that are
-# Archived i.e. SIPs that have been deleted by a user in the SIP Tool using the
-# Remove button
-# Script requires config.py to run
+# archived i.e. SIPs that have been deleted by a user in the SIP Tool using the remove button
+# The Script requires config.py to run
+
+# API reference: API reference: GET api/SIP/{id}
 
 from requests.packages import urllib3
 import requests
