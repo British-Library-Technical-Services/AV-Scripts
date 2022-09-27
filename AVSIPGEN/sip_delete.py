@@ -4,9 +4,6 @@
 # process is not reversable
 # The Script requires config.py to run
 
-# API reference: GET api/SIP/{id}
-# API reference: DELETE api/SIPs/SIP/{user_id}/{id}
-
 from requests.packages import urllib3
 import requests
 import json
