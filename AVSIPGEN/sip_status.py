@@ -2,8 +2,6 @@
 # have been completed upto.  The search excludes those submitted for ingest and Archvied SIPs
 # The Script requires config.py to run
 
-# API reference: API reference: GET api/SIP/{id}
-
 from requests.packages import urllib3
 import requests
 import json
@@ -12,13 +10,13 @@ import config
 # Mutes SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-SIPStatus = 'sip_status.txt'
-url = config.url
+SIPSTATUS = 'sip_status.txt'
+URL = config.URL
 
 # Set the range of SIP IDs to search
-sip = 1
-while sip <= 25:
-    scrape = '{}/SIP/{}'.format(url, str(sip))
+sip = 0
+while sip <= 0:
+    scrape = '{}/SIP/{}'.format(URL, str(sip))
     r = requests.get(scrape, verify=False)
     if r:
         data = json.loads(r.text)
@@ -30,7 +28,7 @@ while sip <= 25:
             step = stat['StepId']
             com = stat['Complete']
 
-# SIP steps are numbered 1,2,3,20,4,15,5,6 in the json output
+# SIP steps are numbered 1, 2, 3, 20, 4, 15, 5, 6 in the json output
 # the numbering is adjusted to the correct sequencial order for clarity
             if com == False:
                 if step == 20:
@@ -47,7 +45,7 @@ while sip <= 25:
                 step = step -1
 
 # writes the unfinished SIPs to a sip_status text file
-                with open(SIPStatus, 'a') as step_no:
+                with open(SIPSTATUS, 'a') as step_no:
                     step_no.write('{};{};{}'.format(step, sipid, cn) + '\n')
                     print('ID: {}; Shelfmark: {}; Steps complete: {}'.format(sipid, cn, step))
                     break

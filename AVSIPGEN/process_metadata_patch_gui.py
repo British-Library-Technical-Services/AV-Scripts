@@ -3,9 +3,6 @@
 # A compiled stand-alone executable version is available to download from [url]
 # The script requires config.py to run
 
-# API reference: GET api/SIP/processmetadata/{id}
-# API reference: PATCH api/SIP/processmetadata/{sip_id}/{stepstate_id}/{user_id}/{mark_step_complete}
-
 from requests.packages import urllib3
 import wx
 import time
@@ -24,7 +21,7 @@ class MainFrame(wx.Frame):
         panel = wx.Panel(self)
 
         self.status = 200
-        self.url = config.url
+        self.URL = config.URL
         
         src_text = wx.StaticText(panel, label='SOURCE ID')
         self.src_id = wx.TextCtrl(panel, style=wx.TE_CENTRE)
@@ -61,7 +58,7 @@ class MainFrame(wx.Frame):
 
 # Function to capture process metadata from source SIP
     def statusCheck(self):
-        src_url = "{}/SIP/{}".format(self.url, self.src_sip_id)
+        src_url = "{}/SIP/{}".format(self.URL, self.src_sip_id)
         src_get = requests.get(src_url, verify=False)
         self.status = src_get.status_code
         
@@ -78,6 +75,8 @@ class MainFrame(wx.Frame):
             self.report.PushStatusText('')
         else:
             self.report.PushStatusText('{}: ERROR'.format(self.status))
+            time.sleep(3)
+            self.report.PushStatusText('')
 
  # Function to Patch (copy) the process metadata to the destination SIP       
     def patchPM(self, src_get):
@@ -86,7 +85,7 @@ class MainFrame(wx.Frame):
 
         d = json.loads(src_json['ProcessMetadata'])
 
-        dest_url = '{}/SIP/{}'.format(self.url, self.dest_sip_id)
+        dest_url = '{}/SIP/{}'.format(self.URL, self.dest_sip_id)
         dest_req = requests.get(dest_url, verify=False)
         dest_json = dest_req.json()
 
@@ -98,7 +97,7 @@ class MainFrame(wx.Frame):
                 dest_step_id = x['StepStateId']
 
         patch_url = '{}/SIP/processmetadata/{}/{}/{}/true'.format(
-            self.url,
+            self.URL,
             self.dest_sip_id,
             dest_step_id,
             dest_user_id

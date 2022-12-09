@@ -4,9 +4,6 @@
 # process is not reversable
 # The Script requires config.py to run
 
-# API reference: GET api/SIP/{id}
-# API reference: DELETE api/SIPs/SIP/{user_id}/{id}
-
 from requests.packages import urllib3
 import requests
 import json
@@ -16,24 +13,24 @@ import config
 # Mutes SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-list = 'SIPstoDelete.txt'
-url = config.url
-user = config.user
-hold = config.hold
+LIST = 'SIPstoDelete.txt'
+URL = config.URL
+USER = config.USER
+HOLD = config.HOLD
 
-with open(list, 'r') as del_list:
+with open(LIST, 'r') as del_list:
     for sip in del_list:
         sip = sip.rstrip()
 
-        check_url = '{}/SIP/{}/'.format(url, sip)
+        check_url = '{}/SIP/{}/'.format(URL, sip)
         c = requests.get(check_url, verify=False)
         status = c.status_code
         if status == 200:
 
-            del_url = '{}/SIPs/SIP/{}/{}'.format(url, user, sip)
+            del_url = '{}/SIPs/SIP/{}/{}'.format(URL, USER, sip)
             d = requests.delete(del_url, verify=False)
 
-            sip_folder = '\\{}\{}'.format(hold, sip)
+            sip_folder = '\\{}\{}'.format(HOLD, sip)
 
 # Checks the SIP has been deleted (page returns a 404 error) and removes
 # the SIP directory in the hold location if present
